@@ -7,21 +7,28 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+    <header>
         <h1>WhatsApp Chat Analyzer</h1>
-
-        <div class="file-upload">
-            <input type="file" id="chatFileInput" accept=".txt">
+    </header>
+    <main>
+        <section id="file-upload">
+            <h2>Upload Your Chat File</h2>
+            <input type="file" id="chatFile" accept=".txt">
             <button id="analyzeButton" disabled>Analyze</button>
-        </div>
-        
-
-        <div id="resultsSection" style="display:none;"></div>
-
-        <canvas id="activeHoursChart"></canvas>
-
-    </div>
-
-    <script type="module" src="script.js"></script>
+            <p id="fileError" style="color: red; display: none;">Please upload a valid .txt file.</p>
+        </section>
+        <section id="results">
+            <h2>Analysis Results</h2>
+            <div id="stats">
+                <!-- Stats will appear here -->
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 WhatsApp Chat Analyzer</p>
+    </footer>
+    <script src="js/fileUpload.js"></script>
+    <script src="js/fileReader.js"></script>
+    <script src="js/chatParser.js"></script>
 </body>
 </html>
