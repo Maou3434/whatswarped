@@ -3,36 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp Chat Analyzer</title>
+    <title>WhatsApp Chat Analysis</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>WhatsApp Chat Analyzer</h1>
-    </header>
-    <main>
-        <section id="file-upload">
-            <h2>Upload Chat File</h2>
-            <input type="file" id="chatFileInput" accept=".txt">
-            <button id="analyzeButton" disabled>Analyze</button>
-        </section>
-        <section id="results">
-            <h2>Analysis Results</h2>
-            <div id="stats">
-                <h3>General Statistics</h3>
-                <ul id="generalStatsList">
-                    <!-- Stats will be dynamically inserted here -->
-                </ul>
-            </div>
-            <div id="tableContainer">
-                <h3>Parsed Messages</h3>
-                <!-- Parsed chat data will be displayed here -->
-            </div>
-        </section>
-    </main>
-    <script src="js/fileUpload.js"></script>
+    <div id="app">
+        <h1>WhatsApp Chat Analysis</h1>
+
+        <!-- File input for chat file -->
+        <input type="file" id="fileInput" accept=".txt" onchange="handleFileInput(event)">
+
+        <!-- Display Results -->
+        <div id="results">
+            <p id="totalMessages"></p>
+            <p id="wordCount"></p>
+            <p id="topEmoji"></p>
+            <p id="mostUsedWord"></p>
+            <p id="mostUsedPhrase"></p>
+            <p id="longestMessage"></p>
+            <p id="mediaCount"></p>
+        </div>
+
+        <!-- Chart Display -->
+        <canvas id="activeHoursChart"></canvas>
+
+        <!-- Participant Breakdown -->
+        <ul id="participantsList"></ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/fileReader.js"></script>
-    <script src="js/generalStats.js"></script>
     <script src="js/chatParser.js"></script>
+    <script src="js/generalStats.js"></script>
+    <script src="js/wordEmojiStats.js"></script>
 </body>
 </html>
