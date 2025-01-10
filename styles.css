@@ -1,23 +1,52 @@
-/* Placeholder for future styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    text-align: center;
+    background-color: #f4f4f9;
+    color: #333;
 }
 
 header {
-    background-color: #f8f9fa;
-    padding: 20px;
+    background-color: #4a90e2;
+    color: white;
+    padding: 1em 0;
+    text-align: center;
 }
 
 main {
-    padding: 20px;
+    padding: 1em;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-footer {
-    background-color: #f8f9fa;
-    padding: 10px;
-    font-size: 0.9em;
-    color: #6c757d;
+h2 {
+    color: #4a90e2;
+}
+
+#file-upload {
+    margin-bottom: 2em;
+    text-align: center;
+}
+
+#results {
+    margin-top: 2em;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 0.5em;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f9;
 }

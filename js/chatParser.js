@@ -1,61 +1,48 @@
-// Regular expression to match WhatsApp message format
-const messageRegex = /(\d{2}\/\d{2}\/\d{2}), (\d{2}:\d{2}) - (.*?): (.+)/;
+// Parse the chat content and extract messages
+function parseChat(chatContent) {
+    const messageRegex = /^(\d{2}\/\d{2}\/\d{2}), (\d{2}:\d{2}) - (.+?): (.+)$/;
+    const messages = chatContent.split("\n");
+    const parsedData = [];
 
-// Function to parse chat content
-function parseChat(content) {
-    const lines = content.split('\n');
-    const parsedData = lines.map((line) => {
+    for (const line of messages) {
         const match = line.match(messageRegex);
         if (match) {
-            return {
-                date: match[1],
-                time: match[2],
-                sender: match[3],
-                message: match[4],
-            };
+            const [, date, time, sender, message] = match;
+            parsedData.push({ date, time, sender, message });
         }
-        return null; // Skip lines that don't match the format
-    }).filter((entry) => entry !== null);
+    }
+
     return parsedData;
 }
 
-// Function to display parsed data in a table
+// Display parsed chat data in a table
 function displayParsedData(parsedData) {
-    const table = document.createElement('table');
-    table.innerHTML = `
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Sender</th>
-                <th>Message</th>
-            </tr>
-        </thead>
-        <tbody>
-            ${parsedData.map((entry) => `
-                <tr>
-                    <td>${entry.date}</td>
-                    <td>${entry.time}</td>
-                    <td>${entry.sender}</td>
-                    <td>${entry.message}</td>
-                </tr>
-            `).join('')}
-        </tbody>
-    `;
-    statsContainer.innerHTML = ''; // Clear previous content
-    statsContainer.appendChild(table);
-}
+    const tableContainer = document.getElementById("tableContainer");
+    tableContainer.innerHTML = ""; // Clear previous data
 
-// Integrate parsing and display logic with fileReader.js
-analyzeButton.addEventListener('click', () => {
-    const file = chatFileInput.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            const fileContent = event.target.result;
-            const parsedData = parseChat(fileContent);
-            displayParsedData(parsedData);
-        };
-        reader.readAsText(file);
-    }
-});
+    const table = document.createElement("table");
+    const headerRow = document.createElement("tr");
+
+    const headers = ["Date", "Time", "Sender", "Message"];
+    headers.forEach((header) => {
+        const th = document.createElement("th");
+        th.textContent = header;
+        headerRow.appendChild(th);
+    });
+
+    table.appendChild(headerRow);
+
+    parsedData.forEach(({ date, time, sender, message }) => {
+        const row = document.createElement("tr");
+
+        [date, time, sender, message].forEach((text) => {
+            const td = document.createElement("td");
+            td.textContent = text;
+            row.appendChild(td);
+        });
+
+        table.appendChild(row);
+    });
+
+    tableContainer.appendChild(table);
+}

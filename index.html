@@ -12,23 +12,27 @@
     </header>
     <main>
         <section id="file-upload">
-            <h2>Upload Your Chat File</h2>
-            <input type="file" id="chatFile" accept=".txt">
+            <h2>Upload Chat File</h2>
+            <input type="file" id="chatFileInput" accept=".txt">
             <button id="analyzeButton" disabled>Analyze</button>
-            <p id="fileError" style="color: red; display: none;">Please upload a valid .txt file.</p>
         </section>
         <section id="results">
             <h2>Analysis Results</h2>
             <div id="stats">
-                <!-- Stats will appear here -->
+                <h3>General Statistics</h3>
+                <ul id="generalStatsList">
+                    <!-- Stats will be dynamically inserted here -->
+                </ul>
+            </div>
+            <div id="tableContainer">
+                <h3>Parsed Messages</h3>
+                <!-- Parsed chat data will be displayed here -->
             </div>
         </section>
     </main>
-    <footer>
-        <p>© 2025 WhatsApp Chat Analyzer</p>
-    </footer>
     <script src="js/fileUpload.js"></script>
     <script src="js/fileReader.js"></script>
+    <script src="js/generalStats.js"></script>
     <script src="js/chatParser.js"></script>
 </body>
 </html>

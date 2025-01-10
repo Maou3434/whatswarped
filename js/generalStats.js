@@ -1,27 +1,32 @@
-// Function to calculate general statistics
+// Calculate general statistics from parsed chat data
 function calculateGeneralStats(parsedData) {
-    const totalMessages = parsedData.length;
-    const uniqueParticipants = new Set(parsedData.map((entry) => entry.sender)).size;
-    const wordCount = parsedData.reduce((count, entry) => count + entry.message.split(/\s+/).length, 0);
-    const mediaCount = parsedData.filter((entry) => entry.message.toLowerCase() === "media omitted").length;
-
-    return {
-        totalMessages,
-        uniqueParticipants,
-        wordCount,
-        mediaCount,
+    const stats = {
+        totalMessages: parsedData.length,
+        messagesPerSender: {}
     };
+
+    parsedData.forEach(({ sender }) => {
+        if (!stats.messagesPerSender[sender]) {
+            stats.messagesPerSender[sender] = 0;
+        }
+        stats.messagesPerSender[sender]++;
+    });
+
+    return stats;
 }
 
-// Function to display general statistics
+// Display general statistics
 function displayGeneralStats(stats) {
-    const statsList = `
-        <ul>
-            <li><strong>Total Messages:</strong> ${stats.totalMessages}</li>
-            <li><strong>Unique Participants:</strong> ${stats.uniqueParticipants}</li>
-            <li><strong>Total Word Count:</strong> ${stats.wordCount}</li>
-            <li><strong>Media Messages:</strong> ${stats.mediaCount}</li>
-        </ul>
-    `;
-    statsContainer.innerHTML = statsList;
+    const generalStatsList = document.getElementById("generalStatsList");
+    generalStatsList.innerHTML = ""; // Clear previous stats
+
+    const totalMessagesItem = document.createElement("li");
+    totalMessagesItem.textContent = `Total Messages: ${stats.totalMessages}`;
+    generalStatsList.appendChild(totalMessagesItem);
+
+    for (const [sender, count] of Object.entries(stats.messagesPerSender)) {
+        const senderItem = document.createElement("li");
+        senderItem.textContent = `${sender}: ${count} messages`;
+        generalStatsList.appendChild(senderItem);
+    }
 }
