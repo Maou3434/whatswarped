@@ -11,10 +11,14 @@
         <h1>WhatsApp Chat Analysis</h1>
 
         <!-- File input for chat file -->
-        <input type="file" id="fileInput" accept=".txt" onchange="handleFileInput(event)">
+        <div id="fileInputSection">
+            <label for="fileInput">Upload your WhatsApp chat file (.txt):</label>
+            <input type="file" id="fileInput" accept=".txt" onchange="handleFileInput(event)">
+        </div>
 
         <!-- Display Results -->
         <div id="results">
+            <h2>General Statistics</h2>
             <p id="totalMessages"></p>
             <p id="wordCount"></p>
             <p id="topEmoji"></p>
@@ -24,13 +28,20 @@
             <p id="mediaCount"></p>
         </div>
 
-        <!-- Chart Display -->
-        <canvas id="activeHoursChart"></canvas>
+        <!-- Active Hours Chart -->
+        <div id="activeHoursSection">
+            <h2>Active Hours Analysis</h2>
+            <canvas id="activeHoursChart"></canvas>
+        </div>
 
         <!-- Participant Breakdown -->
-        <ul id="participantsList"></ul>
+        <div id="participantsSection">
+            <h2>Participant Breakdown</h2>
+            <ul id="participantsList"></ul>
+        </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/fileReader.js"></script>
     <script src="js/chatParser.js"></script>
