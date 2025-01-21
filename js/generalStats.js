@@ -63,13 +63,24 @@ function displayGeneralStats(results) {
 }
 
 function displayParticipantsStats(participants) {
-    const participantsList = document.getElementById("participantsList");
-    participantsList.innerHTML = "";
-    for (const [participant, stats] of Object.entries(participants)) {
-        const listItem = document.createElement("li");
-        listItem.textContent = `${participant}: ${stats.messages} messages, ${stats.wordCount} words`;
-        listItem.addEventListener("click", () => displayParticipantStats(participant, stats));
-        participantsList.appendChild(listItem);
+    const participantSelect = document.getElementById("participantSelect");
+    participantSelect.innerHTML = '<option value="all">All Participants</option>';
+
+    for (const participant of Object.keys(participants)) {
+        const option = document.createElement("option");
+        option.value = participant;
+        option.textContent = participant;
+        participantSelect.appendChild(option);
+    }
+}
+
+function handleParticipantChange(event) {
+    const participant = event.target.value;
+    if (participant === "all") {
+        displayGeneralStats(results);
+    } else {
+        const stats = results.participants[participant];
+        displayParticipantStats(participant, stats);
     }
 }
 
@@ -83,6 +94,8 @@ function displayParticipantStats(participant, stats) {
     const { mostUsedPhrase, mostUsedPhraseCount } = getMostUsedPhrase(stats.phraseFrequency);
     setTextContent("mostUsedPhrase", mostUsedPhrase ? `Most Used Phrase: ${mostUsedPhrase} (${mostUsedPhraseCount} times)` : "Most Used Phrase: None");
     setTextContent("longestMessage", stats.longestMessage ? `Longest Message: "${stats.longestMessage}"` : "Longest Message: None");
+    setTextContent("mediaCount", `Media Sent: ${stats.mediaCount}`);
+    displayActiveHours(stats.activeHours);
 }
 
 function setTextContent(elementId, text) {

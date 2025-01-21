@@ -21,6 +21,19 @@ function analyzeChat(chatData) {
 
             if (message.includes("<Media omitted>") || message.toLowerCase().includes("null") || message.toLowerCase().includes("deleted message")) {
                 mediaCount++;
+                if (!participants[sender]) {
+                    participants[sender] = {
+                        messages: 0,
+                        wordCount: 0,
+                        emojis: {},
+                        wordFrequency: {},
+                        phraseFrequency: {},
+                        longestMessage: "",
+                        activeHours: Array(24).fill(0),
+                        mediaCount: 0,
+                    };
+                }
+                participants[sender].mediaCount++;
                 return;
             }
 
@@ -33,6 +46,8 @@ function analyzeChat(chatData) {
                     wordFrequency: {},
                     phraseFrequency: {},
                     longestMessage: "",
+                    activeHours: Array(24).fill(0),
+                    mediaCount: 0,
                 };
             }
             participants[sender].messages++;
@@ -51,16 +66,17 @@ function analyzeChat(chatData) {
             const messageTime = line.split(" - ")[0];
             const hour = parseInt(messageTime.split(", ")[1].split(":")[0]);
             activeHours[hour]++;
+            participants[sender].activeHours[hour]++;
 
             trackWordFrequency(message, wordFrequency);
             trackWordFrequency(message, participants[sender].wordFrequency);
             trackPhraseFrequency(message, phraseFrequency);
             trackPhraseFrequency(message, participants[sender].phraseFrequency);
 
-            if (message.length > longestMessage.length && message.split(" ").length > 3) {
+            if (message.length > longestMessage.length && messageWordCount > 3 && !isNonsensical(message)) {
                 longestMessage = message;
             }
-            if (message.length > participants[sender].longestMessage.length && message.split(" ").length > 3) {
+            if (message.length > participants[sender].longestMessage.length && messageWordCount > 3 && !isNonsensical(message)) {
                 participants[sender].longestMessage = message;
             }
         }
@@ -102,4 +118,10 @@ function getMostUsedPhrase(phraseFrequency) {
     const mostUsedPhrase = Object.keys(phraseFrequency).reduce((a, b) => phraseFrequency[a] > phraseFrequency[b] ? a : b, "");
     const mostUsedPhraseCount = phraseFrequency[mostUsedPhrase] || 0;
     return { mostUsedPhrase, mostUsedPhraseCount };
+}
+
+function isNonsensical(message) {
+    const words = message.split(/\s+/);
+    const uniqueWords = new Set(words);
+    return uniqueWords.size / words.length < 0.5;
 }

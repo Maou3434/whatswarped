@@ -16,6 +16,14 @@
             <input type="file" id="fileInput" accept=".txt" onchange="handleFileInput(event)">
         </div>
 
+        <!-- Participant Selection -->
+        <div id="participantSelectionSection">
+            <label for="participantSelect">Select Participant:</label>
+            <select id="participantSelect" onchange="handleParticipantChange(event)">
+                <option value="all">All Participants</option>
+            </select>
+        </div>
+
         <!-- Display Results -->
         <div id="results">
             <h2>General Statistics</h2>
@@ -34,11 +42,6 @@
             <canvas id="activeHoursChart"></canvas>
         </div>
 
-        <!-- Participant Breakdown -->
-        <div id="participantsSection">
-            <h2>Participant Breakdown</h2>
-            <ul id="participantsList"></ul>
-        </div>
     </div>
 
     <!-- Scripts -->

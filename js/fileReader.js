@@ -1,3 +1,5 @@
+let results;
+
 function handleFileInput(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -9,7 +11,7 @@ function handleFileInput(event) {
 
     reader.onload = function(e) {
         const chatData = e.target.result;
-        const results = analyzeChat(chatData);
+        results = analyzeChat(chatData);
 
         displayGeneralStats(results);
         displayWordEmojiStats(results);
