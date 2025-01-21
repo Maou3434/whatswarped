@@ -1,6 +1,3 @@
-// chatParser.js
-
-// Function to parse and analyze chat data
 function analyzeChat(chatData) {
     const lines = chatData.split("\n");
     const messageRegex = /^\d{2}\/\d{2}\/\d{2,4}, \d{1,2}:\d{2} - (.+?): (.+)$/;
@@ -10,7 +7,7 @@ function analyzeChat(chatData) {
     let participants = {};
     let wordCount = 0;
     let emojis = {};
-    let activeHours = Array(24).fill(0); // Track active hours for heat map
+    let activeHours = Array(24).fill(0);
     let wordFrequency = {};
     let phraseFrequency = {};
     let longestMessage = "";
@@ -22,51 +19,56 @@ function analyzeChat(chatData) {
             const sender = match[1];
             let message = match[2];
 
-            // Skip non-informative or placeholder messages
             if (message.includes("<Media omitted>") || message.toLowerCase().includes("null") || message.toLowerCase().includes("deleted message")) {
-                mediaCount++; // Count media omitted messages as media
-                return; // Skip the rest of the processing for this message
+                mediaCount++;
+                return;
             }
 
             totalMessages++;
-            // Count messages per participant
-            participants[sender] = (participants[sender] || 0) + 1;
+            if (!participants[sender]) {
+                participants[sender] = {
+                    messages: 0,
+                    wordCount: 0,
+                    emojis: {},
+                    wordFrequency: {},
+                    phraseFrequency: {},
+                    longestMessage: "",
+                };
+            }
+            participants[sender].messages++;
+            const messageWordCount = message.split(/\s+/).length;
+            participants[sender].wordCount += messageWordCount;
+            wordCount += messageWordCount;
 
-            // Count words in the message
-            wordCount += message.split(/\s+/).length;
-
-            // Track emojis in the message
             const emojisInMessage = message.match(emojiRegex);
             if (emojisInMessage) {
                 emojisInMessage.forEach((emoji) => {
                     emojis[emoji] = (emojis[emoji] || 0) + 1;
+                    participants[sender].emojis[emoji] = (participants[sender].emojis[emoji] || 0) + 1;
                 });
             }
 
-            // Track the most active hours
             const messageTime = line.split(" - ")[0];
             const hour = parseInt(messageTime.split(", ")[1].split(":")[0]);
             activeHours[hour]++;
 
-            // Track word and phrase frequencies
             trackWordFrequency(message, wordFrequency);
+            trackWordFrequency(message, participants[sender].wordFrequency);
             trackPhraseFrequency(message, phraseFrequency);
+            trackPhraseFrequency(message, participants[sender].phraseFrequency);
 
-            // Track the longest message
             if (message.length > longestMessage.length && message.split(" ").length > 3) {
                 longestMessage = message;
+            }
+            if (message.length > participants[sender].longestMessage.length && message.split(" ").length > 3) {
+                participants[sender].longestMessage = message;
             }
         }
     });
 
-    const topEmoji = Object.keys(emojis).reduce((a, b) => emojis[a] > emojis[b] ? a : b, "");
-    const topEmojiCount = emojis[topEmoji] || 0;
-
-    const mostUsedWord = Object.keys(wordFrequency).reduce((a, b) => wordFrequency[a] > wordFrequency[b] ? a : b, "");
-    const mostUsedWordCount = wordFrequency[mostUsedWord] || 0;
-
-    const mostUsedPhrase = Object.keys(phraseFrequency).reduce((a, b) => phraseFrequency[a] > phraseFrequency[b] ? a : b, "");
-    const mostUsedPhraseCount = phraseFrequency[mostUsedPhrase] || 0;
+    const { topEmoji, topEmojiCount } = getTopEmoji(emojis);
+    const { mostUsedWord, mostUsedWordCount } = getMostUsedWord(wordFrequency);
+    const { mostUsedPhrase, mostUsedPhraseCount } = getMostUsedPhrase(phraseFrequency);
 
     return {
         totalMessages,
@@ -82,4 +84,22 @@ function analyzeChat(chatData) {
         longestMessage,
         mediaCount,
     };
+}
+
+function getTopEmoji(emojis) {
+    const topEmoji = Object.keys(emojis).reduce((a, b) => emojis[a] > emojis[b] ? a : b, "");
+    const topEmojiCount = emojis[topEmoji] || 0;
+    return { topEmoji, topEmojiCount };
+}
+
+function getMostUsedWord(wordFrequency) {
+    const mostUsedWord = Object.keys(wordFrequency).reduce((a, b) => wordFrequency[a] > wordFrequency[b] ? a : b, "");
+    const mostUsedWordCount = wordFrequency[mostUsedWord] || 0;
+    return { mostUsedWord, mostUsedWordCount };
+}
+
+function getMostUsedPhrase(phraseFrequency) {
+    const mostUsedPhrase = Object.keys(phraseFrequency).reduce((a, b) => phraseFrequency[a] > phraseFrequency[b] ? a : b, "");
+    const mostUsedPhraseCount = phraseFrequency[mostUsedPhrase] || 0;
+    return { mostUsedPhrase, mostUsedPhraseCount };
 }

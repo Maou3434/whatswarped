@@ -1,5 +1,3 @@
-// fileReader.js
-
 function handleFileInput(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -13,10 +11,9 @@ function handleFileInput(event) {
         const chatData = e.target.result;
         const results = analyzeChat(chatData);
 
-        // Display results on the page
         displayGeneralStats(results);
         displayWordEmojiStats(results);
-        displayActiveHoursChart(results.activeHours);
+        displayActiveHours(results.activeHours);
     };
 
     reader.readAsText(file);
