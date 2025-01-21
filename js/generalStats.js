@@ -1,8 +1,15 @@
 // generalStats.js
 
+let activeHoursChart;
+
 function displayActiveHours(activeHours) {
     const ctx = document.getElementById("activeHoursChart").getContext("2d");
-    new Chart(ctx, getChartConfig(activeHours));
+    if (activeHoursChart) {
+        activeHoursChart.data.datasets[0].data = activeHours;
+        activeHoursChart.update();
+    } else {
+        activeHoursChart = new Chart(ctx, getChartConfig(activeHours));
+    }
 }
 
 function getChartConfig(activeHours) {
