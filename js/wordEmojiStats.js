@@ -27,15 +27,26 @@ function isValidWord(word) {
 }
 
 function trackPhraseFrequency(message, phraseFrequency) {
+    const excludedPhrases = [
+        "message was edited",
+        "edited this message",
+        "message was deleted",
+        "deleted this message"
+    ];
+
     const words = message.split(/\s+/).map(cleanWord);
     for (let i = 0; i < words.length - 1; i++) {
         if (isValidWord(words[i]) && isValidWord(words[i + 1])) {
             const phrase = `${words[i]} ${words[i + 1]}`;
-            phraseFrequency[phrase] = (phraseFrequency[phrase] || 0) + 1;
+            if (!excludedPhrases.some(excluded => phrase.includes(excluded))) {
+                phraseFrequency[phrase] = (phraseFrequency[phrase] || 0) + 1;
+            }
         }
         if (i < words.length - 2 && isValidWord(words[i + 2])) {
             const threeWordPhrase = `${words[i]} ${words[i + 1]} ${words[i + 2]}`;
-            phraseFrequency[threeWordPhrase] = (phraseFrequency[threeWordPhrase] || 0) + 1;
+            if (!excludedPhrases.some(excluded => threeWordPhrase.includes(excluded))) {
+                phraseFrequency[threeWordPhrase] = (phraseFrequency[threeWordPhrase] || 0) + 1;
+            }
         }
     }
 }
