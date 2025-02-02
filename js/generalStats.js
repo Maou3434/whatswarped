@@ -67,6 +67,8 @@ function displayGeneralStats(results) {
     setTextContent("mediaCount", `Media Sent: ${results.mediaCount}`);
     displayActiveHours(results.activeHours);
     displayParticipantsStats(results.participants);
+
+    document.querySelectorAll(".stat").forEach(stat => stat.classList.remove("hidden"));
 }
 
 function displayParticipantsStats(participants) {

@@ -111,3 +111,16 @@ canvas {
     border-bottom: 2px solid #4CAF50;
     padding-bottom: 5px;
 }
+
+.hidden {
+    display: none;
+}
+
+.stat {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.stat.visible {
+    opacity: 1;
+}

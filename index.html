@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WhatsApp Chat Analysis</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
 </head>
 <body>
     <div id="app">
@@ -17,7 +18,7 @@
         </div>
 
         <!-- Participant Selection -->
-        <div id="participantSelectionSection">
+        <div id="participantSelectionSection" class="hidden" data-aos="fade-up">
             <label for="participantSelect">Select Participant:</label>
             <select id="participantSelect" onchange="handleParticipantChange(event)">
                 <option value="all">All Participants</option>
@@ -25,30 +26,34 @@
         </div>
 
         <!-- Display Results -->
-        <div id="results">
+        <div id="results" class="hidden">
             <h2>General Statistics</h2>
-            <p id="totalMessages"></p>
-            <p id="wordCount"></p>
-            <p id="topEmoji"></p>
-            <p id="mostUsedWord"></p>
-            <p id="mostUsedPhrase"></p>
-            <p id="longestMessage"></p>
-            <p id="mediaCount"></p>
+            <p id="totalMessages" class="stat hidden" data-aos="fade-up"></p>
+            <p id="wordCount" class="stat hidden" data-aos="fade-up"></p>
+            <p id="topEmoji" class="stat hidden" data-aos="fade-up"></p>
+            <p id="mostUsedWord" class="stat hidden" data-aos="fade-up"></p>
+            <p id="mostUsedPhrase" class="stat hidden" data-aos="fade-up"></p>
+            <p id="longestMessage" class="stat hidden" data-aos="fade-up"></p>
+            <p id="mediaCount" class="stat hidden" data-aos="fade-up"></p>
         </div>
 
         <!-- Active Hours Chart -->
-        <div id="activeHoursSection">
+        <div id="activeHoursSection" class="hidden" data-aos="fade-up">
             <h2>Active Hours Analysis</h2>
             <canvas id="activeHoursChart"></canvas>
         </div>
-
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/fileReader.js"></script>
     <script src="js/chatParser.js"></script>
     <script src="js/generalStats.js"></script>
     <script src="js/wordEmojiStats.js"></script>
+    <script src="js/scrollHandler.js"></script>
+    <script>
+        AOS.init();
+    </script>
 </body>
 </html>
