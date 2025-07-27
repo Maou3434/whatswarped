@@ -1,15 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const stats = document.querySelectorAll(".stat");
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    stats.forEach(stat => observer.observe(stat));
+    // Removed IntersectionObserver for .stat elements to avoid conflict with manual .visible class toggling
 });
 
 function handleFileInput(event) {
