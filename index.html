@@ -4,47 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WhatsApp Chat Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
 </head>
 <body>
-    <div id="app">
-        <h1>WhatsApp Chat Analysis</h1>
-
-        <!-- File input for chat file -->
-        <div id="fileInputSection">
-            <label for="fileInput">Upload your WhatsApp chat file (.txt):</label>
-            <input type="file" id="fileInput" accept=".txt" onchange="handleFileInput(event)">
+    <header>
+        <div class="hero" data-aos="fade-down">
+            <h1>WhatsApp Chat Analysis</h1>
+            <p class="subtitle">Visualize and explore your WhatsApp conversations with beautiful insights</p>
         </div>
-
-        <!-- Participant Selection -->
-        <div id="participantSelectionSection" class="hidden" data-aos="fade-up">
+        <div id="darkModeToggleContainer">
+            <!-- Dark mode toggle will go here -->
+        </div>
+    </header>
+    <main>
+        <section id="fileInputSection" class="card" data-aos="fade-up">
+            <label for="fileInput">Upload your WhatsApp chat file (.txt):</label>
+            <div class="upload-btn-wrapper">
+                <input type="file" id="fileInput" accept=".txt" onchange="handleFileInput(event)" />
+                <label for="fileInput" class="upload-btn">
+                    <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M12 16V4m0 0l-4.5 4.5M12 4l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect width="20" height="8" x="2" y="16" rx="2" fill="currentColor" opacity=".2"/></svg>
+                    <span>Choose File</span>
+                </label>
+                <!-- <span class="file-name"></span> -->
+            </div>
+        </section>
+        <section id="participantSelectionSection" class="card hidden" data-aos="fade-up">
             <label for="participantSelect">Select Participant:</label>
             <select id="participantSelect" onchange="handleParticipantChange(event)">
                 <option value="all">All Participants</option>
             </select>
-        </div>
-
-        <!-- Display Results -->
-        <div id="results" class="hidden">
+        </section>
+        <section id="results" class="card hidden">
             <h2>General Statistics</h2>
-            <p id="totalMessages" class="stat hidden" data-aos="fade-up"></p>
-            <p id="wordCount" class="stat hidden" data-aos="fade-up"></p>
-            <p id="topEmoji" class="stat hidden" data-aos="fade-up"></p>
-            <p id="mostUsedWord" class="stat hidden" data-aos="fade-up"></p>
-            <p id="mostUsedPhrase" class="stat hidden" data-aos="fade-up"></p>
-            <p id="longestMessage" class="stat hidden" data-aos="fade-up"></p>
-            <p id="mediaCount" class="stat hidden" data-aos="fade-up"></p>
-        </div>
-
-        <!-- Active Hours Chart -->
-        <div id="activeHoursSection" class="hidden" data-aos="fade-up">
+            <div class="stats-grid">
+                <div class="stat hidden" id="totalMessagesStat" data-aos="fade-up">
+                    <div class="stat-label">Total Messages</div>
+                    <span class="stat-value" id="totalMessages"></span>
+                </div>
+                <div class="stat hidden" id="wordCountStat" data-aos="fade-up">
+                    <div class="stat-label">Word Count</div>
+                    <span class="stat-value" id="wordCount"></span>
+                </div>
+                <div class="stat hidden" id="topEmojiStat" data-aos="fade-up">
+                    <div class="stat-label">Top Emoji</div>
+                    <span class="stat-value" id="topEmoji"></span>
+                </div>
+                <div class="stat hidden" id="mostUsedWordStat" data-aos="fade-up">
+                    <div class="stat-label">Most Used Word</div>
+                    <span class="stat-value" id="mostUsedWord"></span>
+                </div>
+                <div class="stat hidden" id="mostUsedPhraseStat" data-aos="fade-up">
+                    <div class="stat-label">Most Used Phrase</div>
+                    <span class="stat-value" id="mostUsedPhrase"></span>
+                </div>
+                <div class="stat hidden" id="longestMessageStat" data-aos="fade-up">
+                    <div class="stat-label">Longest Message</div>
+                    <span class="stat-value" id="longestMessage"></span>
+                </div>
+                <div class="stat hidden" id="mediaCountStat" data-aos="fade-up">
+                    <div class="stat-label">Media Sent</div>
+                    <span class="stat-value" id="mediaCount"></span>
+                </div>
+            </div>
+        </section>
+        <section id="activeHoursSection" class="card hidden" data-aos="fade-up">
             <h2>Active Hours Analysis</h2>
             <canvas id="activeHoursChart"></canvas>
-        </div>
-    </div>
-
-    <!-- Scripts -->
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 WhatsApp Chat Analysis &mdash; Made with ❤️</p>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/fileReader.js"></script>
