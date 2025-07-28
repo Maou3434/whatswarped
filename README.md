@@ -13,7 +13,7 @@
 ## 🖼️ Demo
 Open `index.html` in your browser and upload a WhatsApp chat export to see your stats come alive!
 
-![screenshot or gif placeholder]
+<img width="1549" height="1013" alt="image" src="https://github.com/user-attachments/assets/b95728d7-05c7-48dd-9cad-404953bc91a6" />
 
 ## 🚀 Getting Started
 1. **Export your WhatsApp chat** (without media) from your phone:
