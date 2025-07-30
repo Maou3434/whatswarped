@@ -18,7 +18,7 @@ Open `index.html` in your browser and upload a WhatsApp chat export to see your 
 ## 🚀 Getting Started
 1. **Export your WhatsApp chat** (without media) from your phone:
    - In WhatsApp, open the chat > More > Export chat > WITHOUT media > Save as `.txt`
-2. **Download or clone this repo**
+2. **Download or clone this repo or visit https://maou3434.github.io/whatswarped/**
 3. **Open `index.html` in your browser** (no server needed)
 4. **Upload your chat file** and enjoy your personalized stats!
 
@@ -52,9 +52,6 @@ whatswarped/
 
 ## 🤝 Contributing
 Pull requests and suggestions are welcome! Please open an issue or PR for feedback, features, or bug fixes.
-
-## 📄 License
-MIT (add a LICENSE file if you want)
 
 ## 🙏 Credits
 - [Chart.js](https://www.chartjs.org/) for charts
